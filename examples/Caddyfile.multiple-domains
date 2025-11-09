@@ -1,0 +1,55 @@
+# Caddyfile with multiple DuckDNS subdomains
+#
+# Demonstrates handling multiple DuckDNS subdomains
+# and different backend services.
+#
+# Note: DuckDNS does not support wildcard certificates
+# Each subdomain must be explicitly listed
+
+# Main site
+app.yourdomain.duckdns.org {
+    tls {
+        dns duckdns
+    }
+
+    # Serve static files or proxy
+    reverse_proxy frontend:80
+}
+
+# Blog subdomain
+blog.yourdomain.duckdns.org {
+    tls {
+        dns duckdns
+    }
+
+    reverse_proxy blog:8080
+}
+
+# Shop subdomain
+shop.yourdomain.duckdns.org {
+    tls {
+        dns duckdns
+    }
+
+    reverse_proxy shop:3000
+}
+
+# Docs subdomain
+docs.yourdomain.duckdns.org {
+    tls {
+        dns duckdns
+    }
+
+    reverse_proxy docs:4000
+}
+
+# Different DuckDNS domain entirely
+anotherdomain.duckdns.org {
+    tls {
+        dns duckdns
+    }
+
+    root * /var/www/html
+    file_server
+    encode gzip
+}

@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  caddy:
+    image: ivannco/caddy_xcaddy_duckdns:latest
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"  # HTTP/3
+    volumes:
+      # Mount your Caddyfile
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      # Persist Caddy data (certificates, etc.)
+      - caddy_data:/data
+      - caddy_config:/config
+      # Optional: Custom error pages
+      # - ./public:/var/www/html:ro
+    environment:
+      # DuckDNS API Token
+      - DUCKDNS_API_TOKEN=${DUCKDNS_API_TOKEN}
+    networks:
+      - web
+
+volumes:
+  caddy_data:
+    driver: local
+  caddy_config:
+    driver: local
+
+networks:
+  web:
+    driver: bridge

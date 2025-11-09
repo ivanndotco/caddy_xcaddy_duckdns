@@ -1,0 +1,18 @@
+# Simple Caddyfile with DuckDNS DNS challenge
+#
+# This is the most basic configuration for a single domain
+# using DuckDNS for DNS-01 ACME challenge.
+#
+# Requirements:
+# - Free DuckDNS subdomain (e.g., yourdomain.duckdns.org)
+# - DuckDNS API token (see .env.example)
+
+yourdomain.duckdns.org {
+    # Enable TLS with DuckDNS DNS challenge
+    tls {
+        dns duckdns
+    }
+
+    # Simple response
+    respond "Hello from Caddy with DuckDNS!"
+}
