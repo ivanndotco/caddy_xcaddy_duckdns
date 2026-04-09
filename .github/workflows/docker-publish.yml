@@ -19,7 +19,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
 
     steps:
@@ -99,3 +99,29 @@ jobs:
           build-args: |
             CADDY_VERSION=${{ steps.versions.outputs.caddy_clean }}
             DUCKDNS_VERSION=${{ steps.versions.outputs.duckdns }}
+
+      - name: Create GitHub Release
+        if: github.event_name == 'repository_dispatch' || github.event_name == 'workflow_dispatch'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: caddy-${{ steps.versions.outputs.caddy }}-duckdns-${{ steps.versions.outputs.duckdns }}
+          name: "Caddy ${{ steps.versions.outputs.caddy }} + DuckDNS ${{ steps.versions.outputs.duckdns }}"
+          make_latest: true
+          body: |
+            ## Caddy with DuckDNS Plugin
+
+            | Component | Version |
+            |-----------|---------|
+            | Caddy | `${{ steps.versions.outputs.caddy }}` |
+            | caddy-dns/duckdns | `${{ steps.versions.outputs.duckdns }}` |
+
+            ## Pull the image
+
+            ```bash
+            # Latest
+            docker pull ghcr.io/${{ github.repository }}:latest
+
+            # Specific versions
+            docker pull ghcr.io/${{ github.repository }}:caddy-${{ steps.versions.outputs.caddy_clean }}-duckdns-${{ steps.versions.outputs.duckdns_clean }}
+            docker pull ghcr.io/${{ github.repository }}:c${{ steps.versions.outputs.caddy_clean }}-dd${{ steps.versions.outputs.duckdns_clean }}
+            ```
