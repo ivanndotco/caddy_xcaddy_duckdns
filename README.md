@@ -43,7 +43,7 @@ Docker image with Caddy web server and DuckDNS DNS plugin for automatic HTTPS vi
 ### Pull the Image
 
 ```bash
-docker pull ivannco/caddy_xcaddy_duckdns:latest
+docker pull ghcr.io/ivanndotco/caddy_xcaddy_duckdns:latest
 ```
 
 ### Run with Docker
@@ -56,7 +56,7 @@ docker run -d \
   -e DUCKDNS_API_TOKEN=your_token_here \
   -v $PWD/Caddyfile:/etc/caddy/Caddyfile \
   -v caddy_data:/data \
-  ivannco/caddy_xcaddy_duckdns:latest
+  ghcr.io/ivanndotco/caddy_xcaddy_duckdns:latest
 ```
 
 ### Run with Docker Compose
@@ -206,7 +206,7 @@ version: '3.8'
 
 services:
   caddy:
-    image: ivannco/caddy_xcaddy_duckdns:latest
+    image: ghcr.io/ivanndotco/caddy_xcaddy_duckdns:latest
     restart: unless-stopped
     ports:
       - "80:80"
