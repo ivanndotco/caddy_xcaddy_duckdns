@@ -1,6 +1,6 @@
 {
-  "caddy": "v2.11.4",
+  "caddy": "v2.11.7",
   "duckdns": "v0.5.0",
-  "last_checked": "2026-09-28T07:50:23Z",
-  "changed": []
+  "last_checked": "2026-10-05T07:49:14Z",
+  "changed": ["caddy"]
 }
